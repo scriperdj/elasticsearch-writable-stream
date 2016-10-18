@@ -106,6 +106,7 @@ ElasticsearchWritable.prototype.bulkWrite = function bulkWrite(records, callback
         }
 
         if (data.errors === true) {
+            console.log('Errors!! data.items=' + JSON.stringify(data.items));
             var errors = _.chain(data.items)
             .map(function(item) {
                 return _.map(item, 'error')[0];
@@ -121,7 +122,7 @@ ElasticsearchWritable.prototype.bulkWrite = function bulkWrite(records, callback
             var error = new Error(errors);
             error.records = records;
 
-            return callback(error);
+            return callback(data);
         }
 
         callback();
